@@ -5,15 +5,22 @@ import com.example.zuzex.entity.UserEntity;
 import com.example.zuzex.exception.HouseIsNotFoundException;
 import com.example.zuzex.exception.UserAlreadyExistException;
 import com.example.zuzex.exception.UserIsNotFoundException;
+import com.example.zuzex.model.HouseModel;
 import com.example.zuzex.model.UserModel;
+import com.example.zuzex.repository.HouseRepo;
 import com.example.zuzex.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
+
 @Service
+
 public class UserService {
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private HouseRepo houseRepo;
     public UserEntity createUser(UserEntity user) throws UserAlreadyExistException {
         if(userRepo.findByName(user.getName()) != null ){
             throw new UserAlreadyExistException("Такой пользователь уже существует");
@@ -45,12 +52,19 @@ public class UserService {
         userRepo.deleteById(id);
     }
 
-  /*  public  UserEntity buyHouse(UserEntity user,HouseEntity house ) throws UserIsNotFoundException {
-        if (userRepo.findById(house.getId()).isEmpty()) {
-            throw new UserIsNotFoundException("Такого пользователя не существует");
-        }
-        return user.setHouseEntity(house);
-    }*/
+    public HouseModel buyHouse(Long user_id, HouseEntity house ) throws UserIsNotFoundException {
+       try {
+           if (userRepo.findById(house.getId()).isEmpty() || houseRepo.findById(house.getId()).isEmpty() ) {
+               throw new UserIsNotFoundException("Такого пользователя/дома не существует");
+           }
+           house.setUser(userRepo.findById(user_id).get());
+           return HouseModel.toModel(houseRepo.save(house));
+       }
+       catch (Exception e){
+           System.out.println(e.getMessage());
+           return null;
+       }
+    }
 
 
 }

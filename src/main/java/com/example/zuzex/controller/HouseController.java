@@ -4,6 +4,7 @@ import com.example.zuzex.entity.HouseEntity;
 import com.example.zuzex.entity.UserEntity;
 import com.example.zuzex.exception.HouseAlreadyExistException;
 import com.example.zuzex.exception.HouseIsNotFoundException;
+import com.example.zuzex.model.HouseModel;
 import com.example.zuzex.service.HouseSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,6 @@ public class HouseController {
     private  ResponseEntity readHouse(@RequestParam Long id_house)
     {
         try {
-
             return ResponseEntity.ok().body(houseSevice.readHouse(id_house));
         }
         catch (HouseIsNotFoundException e)

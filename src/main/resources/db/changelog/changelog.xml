@@ -5,8 +5,8 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
 
     <changeSet id="1" author="Svyter">
-        <createTable tableName="Users">
-            <column name="id" type="INT">
+<!--        <createTable tableName="Users">
+            <column name="user_id" type="INT">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="VARCHAR(255)">
@@ -26,7 +26,7 @@
             <column name="adress" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-        </createTable>
+        </createTable>-->
     </changeSet>
 
 </databaseChangeLog>

@@ -43,6 +43,5 @@ public class HouseSevice {
             throw new HouseIsNotFoundException("Такого дома не существует");
         }
         houseRepo.deleteById(id);
-
     }
 }

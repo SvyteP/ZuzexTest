@@ -1,5 +1,6 @@
 package com.example.zuzex.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,15 +11,14 @@ import java.util.List;
 @Table(name = "users")
 public class UserEntity {
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "age")
     private String age;
-    @Column(name = "passowrd")
     private String password;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "User")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    @JsonIgnore
     private List<HouseEntity> houseEntity;
 
     public UserEntity() {

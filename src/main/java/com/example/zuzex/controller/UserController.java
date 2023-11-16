@@ -1,5 +1,6 @@
 package com.example.zuzex.controller;
 
+import com.example.zuzex.entity.HouseEntity;
 import com.example.zuzex.entity.UserEntity;
 import com.example.zuzex.exception.UserAlreadyExistException;
 import com.example.zuzex.exception.UserIsNotFoundException;
@@ -15,6 +16,8 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    HouseSevice houseSevice;
 
     @PostMapping("/create")
     private ResponseEntity createUser (@RequestBody UserEntity user)
@@ -79,18 +82,21 @@ public class UserController {
         }
     }
 
-    @PostMapping("/buyHouse")
-    private ResponseEntity buyHouse(Long id_user)
+    @PutMapping("/buyHouse")
+    private ResponseEntity buyHouse(@RequestParam Long id_user,
+                                    @RequestBody HouseEntity house)
     {
         try {
-            userService.deleteUser(id_user);
-            return ResponseEntity.ok().body("User deleted");
+
+            return ResponseEntity.ok().body(userService.buyHouse(id_user,house));
         }
         catch (UserIsNotFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
         catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage()+ " |ExceptionDeleteUser| ");
+            System.out.println("|ExceptionBuyUser| ");
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage()+ " |ExceptionBuyUser| ");
 
         }
     }

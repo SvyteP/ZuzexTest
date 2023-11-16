@@ -5,18 +5,17 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "houses")
+@Table(name = "house")
 public class HouseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "adress")
     private String adress;
-
     @ManyToOne
-    @JoinColumn(name = "id_user")
-    private UserEntity User;
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     public HouseEntity() {
     }
+
 }

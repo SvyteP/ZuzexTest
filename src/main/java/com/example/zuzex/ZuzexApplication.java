@@ -14,7 +14,7 @@ import java.sql.DriverManager;
 public class ZuzexApplication {
 
     public static void main(String[] args) {
-        try {
+     /*   try {
             Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/zuzex", "postgres", "root");
 
             Liquibase liquibase = new Liquibase("db/changelog/changelog.xml",
@@ -28,7 +28,7 @@ public class ZuzexApplication {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         SpringApplication.run(ZuzexApplication.class, args);
 
 
