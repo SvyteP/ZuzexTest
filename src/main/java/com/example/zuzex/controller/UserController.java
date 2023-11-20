@@ -83,12 +83,49 @@ public class UserController {
     }
 
     @PutMapping("/buyHouse")
-    private ResponseEntity buyHouse(@RequestParam Long id_user,
+    private ResponseEntity buyHouse(@RequestParam Long owner_id,
                                     @RequestBody HouseEntity house)
     {
         try {
+            return ResponseEntity.ok().body(userService.buyHouse(owner_id,house));
+        }
+        catch (UserIsNotFoundException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
-            return ResponseEntity.ok().body(userService.buyHouse(id_user,house));
+        catch (Exception e){
+            System.out.println("|ExceptionBuyUser| ");
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage()+ " |ExceptionBuyUser| ");
+
+        }
+    }
+    @PutMapping("/addResid/{house_id}")
+    private ResponseEntity addResid(@PathVariable Long house_id,
+                                    @RequestParam Long user_id)
+    {
+        try {
+
+            return ResponseEntity.ok().body(userService.addResid(user_id,house_id));
+        }
+        catch (UserIsNotFoundException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        catch (Exception e){
+            System.out.println("|ExceptionBuyUser| ");
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage()+ " |ExceptionBuyUser| ");
+
+        }
+
+    }
+    @PutMapping("/delResid/{house_id}")
+    private ResponseEntity delResid(@PathVariable Long house_id,
+                                    @RequestParam Long user_id)
+    {
+        try {
+
+            return ResponseEntity.ok().body(userService.delResid(user_id,house_id));
         }
         catch (UserIsNotFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());

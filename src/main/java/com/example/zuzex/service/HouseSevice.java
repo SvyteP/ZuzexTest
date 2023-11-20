@@ -34,7 +34,7 @@ public class HouseSevice {
                 throw new HouseIsNotFoundException("Такого дома не существует,создайте его с помощью create :)");
             }
         HouseEntity houseEntity = houseRepo.findById(house.getId()).get();
-        houseEntity.setUser(house.getUser());
+        houseEntity.setUserEntity(house.getUserEntity());
         houseEntity.setAdress(house.getAdress());
         return houseRepo.save(houseEntity);
         }
