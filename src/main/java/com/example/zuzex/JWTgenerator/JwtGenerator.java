@@ -30,6 +30,9 @@ public class JwtGenerator {
                 .signWith(key)
                 .compact();
     }
+    public void ValidateToken(String jwtToken){
+
+    }
     public String parseToken(String jwtToken) {
         Jws<Claims> claimsJws = Jwts.parser()
                 .setSigningKey(key)

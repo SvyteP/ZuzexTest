@@ -13,8 +13,12 @@ import com.example.zuzex.repository.HouseRepo;
 import com.example.zuzex.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.net.Authenticator;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,19 +28,24 @@ public class UserService {
     private UserRepo userRepo;
     @Autowired
     private HouseRepo houseRepo;
+    private AuthenticationManager authenticationManager;
 
    @Autowired
     private JwtGenerator jwtGenerator;
     public UserEntity createUser(UserEntity user) throws UserAlreadyExistException {
+        Authentication authentication;
         if(userRepo.findByName(user.getName()) != null ){
             throw new UserAlreadyExistException("Такой пользователь уже существует");
         }
         user.setJwtToken(jwtGenerator.generateToken(user.getName()));
-
+        authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(),user.getPassword()));
         System.out.println("JWT: " +jwtGenerator.getKey());
-        System.out.println(jwtGenerator.getKey());
+        System.out.println(jwtGenerator);
 
         return userRepo.save(user);
+    }
+    public UserEntity findByUserName (String name){
+        return userRepo.findByName(name);
     }
     public UserModel readUser(Long id) throws UserIsNotFoundException {
         UserEntity user = userRepo.findById(id).get();
@@ -127,5 +136,6 @@ public class UserService {
             throw new Exception("Exception buyHouse:\n" + e.getMessage());
         }
     }
+
 
 }
