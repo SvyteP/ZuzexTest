@@ -22,7 +22,7 @@ public class HouseSevice {
     }
 
     public HouseModel readHouse(Long id) throws HouseIsNotFoundException {
-        if (houseRepo.findById(id).isEmpty()) {
+        if (!houseRepo.findById(id).isPresent()) {
             throw new HouseIsNotFoundException("Такого дома не существует");
         }
         return HouseModel.toModel(houseRepo.findById(id).get());
@@ -30,7 +30,7 @@ public class HouseSevice {
 
 
         public  HouseEntity updateHouse (HouseEntity house) throws HouseIsNotFoundException {
-            if (houseRepo.findById(house.getId()).isEmpty()) {
+            if (!houseRepo.findById(house.getId()).isPresent()) {
                 throw new HouseIsNotFoundException("Такого дома не существует,создайте его с помощью create :)");
             }
         HouseEntity houseEntity = houseRepo.findById(house.getId()).get();
@@ -39,7 +39,7 @@ public class HouseSevice {
         return houseRepo.save(houseEntity);
         }
     public void deleteHouse(Long id) throws HouseIsNotFoundException {
-        if (houseRepo.findById(id).isEmpty()) {
+        if (!houseRepo.findById(id).isPresent()) {
             throw new HouseIsNotFoundException("Такого дома не существует");
         }
         houseRepo.deleteById(id);

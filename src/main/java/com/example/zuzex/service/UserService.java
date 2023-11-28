@@ -1,9 +1,9 @@
 package com.example.zuzex.service;
 
-import com.example.zuzex.JWTgenerator.JwtGenerator;
+
 import com.example.zuzex.entity.HouseEntity;
 import com.example.zuzex.entity.UserEntity;
-import com.example.zuzex.exception.HouseIsNotFoundException;
+
 import com.example.zuzex.exception.UserAlreadyExistException;
 import com.example.zuzex.exception.UserIsNotFoundException;
 import com.example.zuzex.exception.UserIsTheOwnerHouseException;
@@ -12,14 +12,13 @@ import com.example.zuzex.model.UserModel;
 import com.example.zuzex.repository.HouseRepo;
 import com.example.zuzex.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.net.Authenticator;
-import java.util.stream.Collectors;
+
 
 @Service
 
@@ -30,17 +29,19 @@ public class UserService {
     private HouseRepo houseRepo;
     private AuthenticationManager authenticationManager;
 
+/*
    @Autowired
     private JwtGenerator jwtGenerator;
+*/
     public UserEntity createUser(UserEntity user) throws UserAlreadyExistException {
         Authentication authentication;
         if(userRepo.findByName(user.getName()) != null ){
             throw new UserAlreadyExistException("Такой пользователь уже существует");
         }
-        user.setJwtToken(jwtGenerator.generateToken(user.getName()));
+      //  user.setJwtToken(jwtGenerator.generateToken(user.getName()));
         authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(),user.getPassword()));
-        System.out.println("JWT: " +jwtGenerator.getKey());
-        System.out.println(jwtGenerator);
+       /* System.out.println("JWT: " +jwtGenerator.getKey());
+        System.out.println(jwtGenerator);*/
 
         return userRepo.save(user);
     }
@@ -49,16 +50,16 @@ public class UserService {
     }
     public UserModel readUser(Long id) throws UserIsNotFoundException {
         UserEntity user = userRepo.findById(id).get();
-        if (userRepo.findById(id).isEmpty())
+        if (!userRepo.findById(id).isPresent())
         {
             throw new UserIsNotFoundException("Такого пользователя не существует");
         }
-        System.out.println(jwtGenerator.parseToken(user.getJwtToken()));
+        //System.out.println(jwtGenerator.parseToken(user.getJwtToken()));
 
         return UserModel.toModel(user);
     }
     public  UserEntity updateUser (UserEntity user) throws  UserIsNotFoundException {
-        if (userRepo.findById(user.getId()).isEmpty()) {
+        if (!userRepo.findById(user.getId()).isPresent()) {
             throw new UserIsNotFoundException("Такого пользователя не существует");
         }
         UserEntity userEntity = userRepo.findById(user.getId()).get();
@@ -68,7 +69,7 @@ public class UserService {
         return userRepo.save(userEntity);
     }
     public void deleteUser (Long id) throws UserIsNotFoundException {
-        if (userRepo.findById(id).isEmpty())
+        if (!userRepo.findById(id).isPresent())
         {
             throw new UserIsNotFoundException("Такого пользователя не существует");
         }
@@ -78,7 +79,7 @@ public class UserService {
     public HouseModel buyHouse(Long owner_id, HouseEntity house ) throws Exception {
         try {
             UserEntity user = userRepo.findById(owner_id).get();
-            if (userRepo.findById(house.getId()).isEmpty() || houseRepo.findById(house.getId()).isEmpty()) {
+            if (!userRepo.findById(house.getId()).isPresent() || !houseRepo.findById(house.getId()).isPresent()) {
                 throw new UserIsNotFoundException("Такого пользователя/дома не существует");
             }
             house.setUserEntity(user);
@@ -97,7 +98,7 @@ public class UserService {
                 throw new UserIsTheOwnerHouseException("Пользователь является хозяином дома");
             }
 
-            if (userRepo.findById(house.getId()).isEmpty() || houseRepo.findById(house.getId()).isEmpty()) {
+            if (!userRepo.findById(house.getId()).isPresent() || !houseRepo.findById(house.getId()).isPresent()) {
                 throw new UserIsNotFoundException("Такого пользователя/дома не существует");
             }
 
@@ -117,7 +118,7 @@ public class UserService {
             UserEntity user = userRepo.findById(user_id).get();
             HouseEntity house = houseRepo.findById(house_id).get();
 
-            if (userRepo.findById(house.getId()).isEmpty() || houseRepo.findById(house.getId()).isEmpty()) {
+            if (!userRepo.findById(house.getId()).isPresent() || !houseRepo.findById(house.getId()).isPresent()) {
                 throw new UserIsNotFoundException("Такого пользователя/дома не существует");
             }
 
