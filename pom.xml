@@ -8,11 +8,11 @@
         <version>2.1.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>net.proselyte</groupId>
-    <artifactId>jwtappdemo</artifactId>
+    <groupId>com.example</groupId>
+    <artifactId>Zuzex</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>JwtAppDemo</name>
-    <description>JWT based spring security REST API</description>
+    <name>Zuzex</name>
+    <description>Zuzex</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -85,6 +85,12 @@
                     <artifactId>postConstruct</artifactId>
                     <version>1.0.0.CR1</version>
                 </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
