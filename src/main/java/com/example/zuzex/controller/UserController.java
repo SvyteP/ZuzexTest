@@ -4,8 +4,8 @@ import com.example.zuzex.entity.HouseEntity;
 import com.example.zuzex.entity.UserEntity;
 import com.example.zuzex.exception.UserAlreadyExistException;
 import com.example.zuzex.exception.UserIsNotFoundException;
-import com.example.zuzex.service.HouseSevice;
-import com.example.zuzex.service.UserServiceImpl;
+import com.example.zuzex.service.HouseService;
+import com.example.zuzex.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class UserController {
     @Autowired
     UserServiceImpl userService;
     @Autowired
-    HouseSevice houseSevice;
+    HouseService houseSevice;
 
     @PostMapping("/create")
     private ResponseEntity createUser (@RequestBody UserEntity user)

@@ -4,7 +4,6 @@ import com.example.zuzex.Security.jwt.JwtUser;
 import com.example.zuzex.Security.jwt.JwtUserFactory;
 import com.example.zuzex.entity.UserEntity;
 import com.example.zuzex.service.UserService;
-import com.example.zuzex.service.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

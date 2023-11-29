@@ -1,16 +1,16 @@
-package com.example.zuzex.service;
+package com.example.zuzex.service.impl;
 
 import com.example.zuzex.entity.HouseEntity;
-import com.example.zuzex.entity.UserEntity;
 import com.example.zuzex.exception.HouseAlreadyExistException;
 import com.example.zuzex.exception.HouseIsNotFoundException;
 import com.example.zuzex.model.HouseModel;
 import com.example.zuzex.repository.HouseRepo;
+import com.example.zuzex.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HouseSevice {
+public class HouseSeviceImpl implements HouseService {
     @Autowired
     private HouseRepo houseRepo;
 

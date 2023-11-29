@@ -1,4 +1,4 @@
-package com.example.zuzex.service;
+package com.example.zuzex.service.impl;
 
 
 import com.example.zuzex.Security.jwt.JwtTokenProvider;
@@ -12,6 +12,7 @@ import com.example.zuzex.model.HouseModel;
 import com.example.zuzex.model.UserModel;
 import com.example.zuzex.repository.HouseRepo;
 import com.example.zuzex.repository.UserRepo;
+import com.example.zuzex.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,20 +26,18 @@ import java.util.Map;
 
 
 @Service
-public class UserServiceImpl  implements UserService{
+public class UserServiceImpl  implements UserService {
 
     private final UserRepo userRepo;
 
     private final HouseRepo houseRepo;
 
-    private final AuthenticationManager authenticationManager;
 
     JwtTokenProvider jwtTokenProvider;
     @Autowired
-    public UserServiceImpl(UserRepo userRepo, HouseRepo houseRepo, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
+    public UserServiceImpl(UserRepo userRepo, HouseRepo houseRepo, JwtTokenProvider jwtTokenProvider) {
         this.userRepo = userRepo;
         this.houseRepo = houseRepo;
-        this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
@@ -124,36 +123,40 @@ public class UserServiceImpl  implements UserService{
                 return HouseModel.toModel(houseRepo.save(house));
             }
             else{
-                throw new Exception("error");
+                throw new UserIsTheOwnerHouseException("Вы не владелец дома!");
             }
 
         }
         catch (Exception e) {
-            throw new Exception("Exception buyHouse:\n" + e.getMessage());
+            throw new Exception("Exception addResid:\n" + e.getMessage());
         }
     }
     public HouseModel delResid(Long user_id, Long house_id ) throws Exception {
         try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             UserEntity user = userRepo.findById(user_id).get();
             HouseEntity house = houseRepo.findById(house_id).get();
 
-            if (!userRepo.findById(house.getId()).isPresent() || !houseRepo.findById(house.getId()).isPresent()) {
-                throw new UserIsNotFoundException("Такого пользователя/дома не существует");
-            }
+            if(userRepo.findByName(authentication.getName()).getHouseEntity().stream().map(HouseEntity::getId).anyMatch(Long ->Long.equals(house_id))) {
+                if (!userRepo.findById(house.getId()).isPresent() || !houseRepo.findById(house.getId()).isPresent()) {
+                    throw new UserIsNotFoundException("Такого пользователя/дома не существует");
+                }
 
-            if (house.getResidents().stream().anyMatch(UserEntity -> UserEntity.equals(user))) {
-                house.getResidents().remove(user);
+                if (house.getResidents().stream().anyMatch(UserEntity -> UserEntity.equals(user))) {
+                    house.getResidents().remove(user);
 
+                } else {
+                    throw new UserIsNotFoundException("Данный пользователь не резидент дома");
+                }
             }
             else {
-                throw new UserIsNotFoundException("Данный пользователь не резидент дома");
+                throw new UserIsTheOwnerHouseException("Вы не владелец дома!");
             }
-
 
             return HouseModel.toModel(houseRepo.save(house));
         }
         catch (Exception e) {
-            throw new Exception("Exception buyHouse:\n" + e.getMessage());
+            throw new Exception("Exception delResid:\n" + e.getMessage());
         }
     }
 

@@ -15,8 +15,7 @@
     <description>Zuzex</description>
 
     <properties>
-        <java.version>1.8</java.version>
-        <mysql.connetor.version>8.0.15</mysql.connetor.version>
+        <java.version>17</java.version>
         <jsonwebtoken.version>0.8.0</jsonwebtoken.version>
     </properties>
 
@@ -41,18 +40,13 @@
                     <artifactId>liquibase-core</artifactId>
                 </dependency>
 
-                <!-- MySQL connector -->
+                <!-- PostgreSQL connector -->
+
                 <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                    <version>${mysql.connetor.version}</version>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>42.7.0</version>
                 </dependency>
-        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.7.0</version>
-        </dependency>
 
 
                 <!-- JSON Web Token lib -->
@@ -85,6 +79,7 @@
                     <artifactId>postConstruct</artifactId>
                     <version>1.0.0.CR1</version>
                 </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
