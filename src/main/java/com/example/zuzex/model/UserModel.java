@@ -12,6 +12,7 @@ public class UserModel {
 
     private String Name;
     private String Age;
+
     private List<String> livingPalcel;
     private List<HouseModel> houseEntity;
 

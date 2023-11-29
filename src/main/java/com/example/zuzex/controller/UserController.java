@@ -4,8 +4,8 @@ import com.example.zuzex.entity.HouseEntity;
 import com.example.zuzex.entity.UserEntity;
 import com.example.zuzex.exception.UserAlreadyExistException;
 import com.example.zuzex.exception.UserIsNotFoundException;
-import com.example.zuzex.service.HouseSevice;
-import com.example.zuzex.service.UserService;
+import com.example.zuzex.service.HouseService;
+import com.example.zuzex.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,23 +15,24 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    UserServiceImpl userService;
     @Autowired
-    HouseSevice houseSevice;
+    HouseService houseSevice;
 
     @PostMapping("/create")
     private ResponseEntity createUser (@RequestBody UserEntity user)
     {
         try {
-            userService.createUser(user);
-            return ResponseEntity.ok().body("User created");
+
+            return ResponseEntity.ok().body("User created "  + userService.createUser(user));
 
         }
         catch (UserAlreadyExistException e){
             return  ResponseEntity.badRequest().body(e.getMessage());
         }
         catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage() + " |ExceptionCreatUser| ");
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(" |ExceptionCreatUser| ");
         }
     }
     @GetMapping("/read")

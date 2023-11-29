@@ -2,7 +2,7 @@ package com.example.zuzex.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,8 +10,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Entity
 
 @Table(name = "users")
@@ -22,7 +21,7 @@ public class UserEntity {
     private String name;
     private String age;
     private String password;
-    private String jwtToken;
+    private String Token;
     @ManyToMany(cascade = CascadeType.ALL,
                 mappedBy = "residents")
     private List<HouseEntity> living_place;

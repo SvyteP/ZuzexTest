@@ -1,11 +1,9 @@
 package com.example.zuzex.controller;
 
 import com.example.zuzex.entity.HouseEntity;
-import com.example.zuzex.entity.UserEntity;
 import com.example.zuzex.exception.HouseAlreadyExistException;
 import com.example.zuzex.exception.HouseIsNotFoundException;
-import com.example.zuzex.model.HouseModel;
-import com.example.zuzex.service.HouseSevice;
+import com.example.zuzex.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/house")
 public class HouseController {
     @Autowired
-    HouseSevice houseSevice;
+    HouseService houseSevice;
     @PostMapping("/create")
     private ResponseEntity createHouse (@RequestBody HouseEntity house)
     {

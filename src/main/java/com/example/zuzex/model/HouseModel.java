@@ -16,7 +16,11 @@ public class HouseModel {
     public static HouseModel toModel(HouseEntity house){
         HouseModel houseModel = new HouseModel();
             houseModel.setAdress(house.getAdress());
-            houseModel.setOwner_id(house.getUserEntity().getId());
+
+            if(house.getUserEntity() !=null) {
+                houseModel.setOwner_id(house.getUserEntity().getId());
+            }
+
             if(house.getResidents() != null) {
                 houseModel.setResidents(house.getResidents().stream().map(UserEntity::getName).collect(Collectors.toList()));
             }
