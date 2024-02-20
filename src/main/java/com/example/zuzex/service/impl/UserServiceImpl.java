@@ -142,7 +142,7 @@ public class UserServiceImpl  implements UserService {
                     throw new UserIsNotFoundException("Такого пользователя/дома не существует");
                 }
 
-                if (house.getResidents().stream().anyMatch(UserEntity -> UserEntity.equals(user))) {
+                if (house.getResidents().stream().anyMatch(UserEncatity ->  UserEntity.equals(user))) {
                     house.getResidents().remove(user);
 
                 } else {

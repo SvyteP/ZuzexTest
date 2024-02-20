@@ -1,7 +1,8 @@
 package com.example.zuzex.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import javax.persistence.*;
+
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
